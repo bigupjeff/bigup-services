@@ -1,0 +1,16 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "bigupweb/service-price",
+	"version": "0.1.0",
+	"title": "Service Price",
+	"category": "theme",
+	"icon": "smiley",
+	"description": "Price custom field for the 'Service' custom post type",
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"supports": {
+		"html": false
+	},
+	"textdomain": "bigupweb-service-name",
+	"editorScript": "file:./index.js"
+}

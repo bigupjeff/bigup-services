@@ -1,0 +1,6 @@
+/**
+ * Patch a bug where the classic editor grows in height each time you click on it.
+ */
+body#tinymce {
+	height: auto !important;
+}

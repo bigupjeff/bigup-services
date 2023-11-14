@@ -1,0 +1,26 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": 2,
+	"name": "bigupweb/service-icon",
+	"version": "0.1.0",
+	"title": "Service Icon",
+	"category": "theme",
+	"icon": "smiley",
+	"description": "Icon custom field for the 'Service' custom post type",
+	"usesContext": [ "postId", "postType", "queryId" ],
+	"supports": {
+		"html": false
+	},
+	"textdomain": "bigupweb-service-icon",
+	"editorScript": "file:./index.js",
+	"attributes": {
+		"width": {
+			"type": "integer",
+			"default": 100
+		},
+		"height": {
+			"type": "integer",
+			"default": 100
+		}
+	}
+}

@@ -1,0 +1,77 @@
+{
+	"key": "service",
+	"label": "Services",
+	"slug": "edit.php?post_type=service",
+	"prefix": "_bigup_",
+	"metaboxID": "service-meta",
+	"definition": {
+		"labels": {
+			"name": "Services",
+			"singular_name": "Service",
+			"add_new": "New Service",
+			"add_new_item": "Add New Service",
+			"edit_item": "Edit Service",
+			"new_item": "New Service",
+			"view_item": "View Service",
+			"search_items": "Search Services",
+			"not_found": "No Services Found",
+			"not_found_in_trash": "No Services found in Trash"
+		},
+		"supports": [
+			"title",
+			"editor",
+			"thumbnail",
+			"excerpt",
+			"custom-fields"
+		],
+		"description": "Services provided to customers.",
+		"public": true,
+		"exclude_from_search": false,
+		"publicly_queryable": true,
+		"query_var": true,
+		"show_in_menu": true,
+		"menu_position": 5,
+		"menu_icon": "dashicons-businessperson",
+		"hierarchical": false,
+		"taxonomies": [
+			"category",
+			"post_tag"
+		],
+		"show_in_rest": true,
+		"delete_with_user": false,
+		"rewrite": {
+			"slug": "services"
+		}
+	},
+	"customFields": [
+		{
+			"block_name": "bigupweb/service-price",
+			"suffix": "_price",
+			"label": "Price",
+			"description": "The cost of this service",
+			"type": "float",
+			"input_type": "number",
+			"placeholder": "Add a price",
+			"required": "",
+			"number_min": 0,
+			"number_max": "",
+			"number_step": 0.01,
+			"show_in_rest": "true",
+			"single": "true",
+			"user_capabilities": "edit_posts"
+		},
+		{
+			"block_name": "bigupweb/service-icon",
+			"suffix": "_icon",
+			"label": "Icon",
+			"description": "A service icon",
+			"type": "integer",
+			"input_type": "image-upload",
+			"placeholder": "Add an icon",
+			"required": "",
+			"show_in_rest": "true",
+			"single": "true",
+			"user_capabilities": "edit_posts"
+		}
+	]
+}

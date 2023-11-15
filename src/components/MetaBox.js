@@ -42,6 +42,9 @@ console.log( metaFields )
 		} )
 	} )
 
+
+console.log( 'metaFields', metaFields )
+
 	return(
 		<>
 			{ fields.map( ( field ) => (

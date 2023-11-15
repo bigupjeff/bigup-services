@@ -17,9 +17,6 @@ console.log( 'bigup-cpt-service-metabox PLUGIN LOADED' )
  */
 const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 
-
-console.log( metaFields )
-
 	if ( postType !== key ) return null
 
 	// Dynamically build an object array of meta fields for output in the panel.
@@ -41,9 +38,6 @@ console.log( metaFields )
 			'media': ( inputType === 'image-upload' ) ? useSelect( ( select ) => select( "core" ).getMedia( value ) ) : false,
 		} )
 	} )
-
-
-console.log( 'metaFields', metaFields )
 
 	return(
 		<>

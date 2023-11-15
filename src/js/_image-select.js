@@ -41,11 +41,6 @@ const imageSelect = () => {
 			mediaFrame.on( 'select', () => {
 				// Get attachment selection and create a JSON representation of the model.
 				const attachment = mediaFrame.state().get( 'selection' ).first().toJSON()
-
-
-				console.log( attachment.id )
-
-
 				const domain = window.location.origin
 				const relativePath = attachment.url.replace( domain, '' )
 

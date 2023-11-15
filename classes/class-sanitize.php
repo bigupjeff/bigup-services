@@ -156,10 +156,6 @@ class Sanitize {
 	 */
 	public static function number( $number ) {
 
-
-error_log( $number );
-
-
 		$clean_number = (float) $number;
 		return $clean_number;
 	}

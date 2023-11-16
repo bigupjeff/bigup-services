@@ -106,7 +106,7 @@ export default function Edit( {
 				</InspectorControls>
 			}
 
-			{ field.value &&
+			{ ( !! field.value ) &&
 				<figure { ...blockProps }>
 					<img
 						src={ field.media?.source_url }

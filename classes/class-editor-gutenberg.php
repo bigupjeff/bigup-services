@@ -123,16 +123,18 @@ class Editor_Gutenberg {
 					break;
 
 				case '_icon':
-					$icon_markup = wp_get_attachment_image( 
-						$attachment_id = $value,                 // Attachment id.
-						$size = 'bigup_service_icon',            // Size.
-						$icon = true,                            // Treat image as an icon.
-						$attr = array(
-							'alt' => $field['label'] .  ' icon', // alt text.
-						),
-					);
-					if ( strlen( $icon_markup ) > 0 ) {
-						$output .= '<figure>' . $icon_markup . '</figure>';
+					if ( !! $value ) {
+						$icon_markup = wp_get_attachment_image( 
+							$attachment_id = $value,                 // Attachment id.
+							$size = 'bigup_service_icon',            // Size.
+							$icon = true,                            // Treat image as an icon.
+							$attr = array(
+								'alt' => $field['label'] .  ' icon', // alt text.
+							),
+						);
+						if ( strlen( $icon_markup ) > 0 ) {
+							$output .= '<figure>' . $icon_markup . '</figure>';
+						}
 					}
 					break;
 			}

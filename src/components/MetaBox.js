@@ -111,7 +111,7 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 									</MediaUploadCheck>
 									<MediaUploadCheck>
 										<Button
-											onClick={ () => field.updateValue( false ) }
+											onClick={ () => field.updateValue( 0 ) }
 											variant="secondary" 
 											isLarge
 										>

@@ -1,4 +1,6 @@
 <?php
+namespace BigupWeb\CPT_Service;
+
 /**
  * Plugin Name:       Bigup Web: Custom Post Type - Service
  * Description:       A custom 'Services' post type with custom meta fields.
@@ -25,6 +27,5 @@ define( 'CPTSERV_URL', trailingslashit( get_site_url( null, strstr( __DIR__, '/w
 require_once CPTSERV_DIR . 'classes/autoload.php';
 
 // Setup this plugin.
-use BigupWeb\CPT_Service\Initialise;
-$Init = new Initialise();
-$Init->setup_plugin();
+$Init = new Init();
+$Init->setup();

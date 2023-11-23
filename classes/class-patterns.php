@@ -57,10 +57,14 @@ class Patterns {
 				'label' => __( 'Bigup Web: Services', 'cpt-service' )
 			),
 		);
-
-		$files = scandir( CPTSERV_DIR . 'patterns' ); 
-		$filenames = preg_replace( '/\..*/', '', $files );
-		$this->patterns = array_filter( $filenames );
+		$path = CPTSERV_DIR . 'patterns';
+		if( file_exists( $path ) ) {
+			$files = scandir( $path );
+		}
+		if ( is_array( $files ) ) {
+			$filenames = preg_replace( '/\..*/', '', $files );
+			$this->patterns = array_filter( $filenames );
+		}
 	}
 
 

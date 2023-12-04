@@ -123,24 +123,41 @@ class Editor_Gutenberg {
 					break;
 
 				case '_icon':
-					if ( !! $value ) {
-						$icon_markup = wp_get_attachment_image( 
-							$attachment_id = $value,                 // Attachment id.
+					$attachment_id  = $value;
+					$url            = wp_get_attachment_url( $attachment_id );
+					$ext            = pathinfo( $url, PATHINFO_EXTENSION );
+					$style          = 'style="display:inline-block;"';
+
+					// SVG.
+					if ( 'svg' === $ext ) {
+						$svg_markup = "<svg" .
+							" data-src={$url}" .
+							" width={$attributes['width']}" .
+							" height={$attributes['height']}" .
+							" data-loading='lazy' data-cache='disabled'" .
+							"></svg>";
+
+						$output .= '<div ' . $style . ' ' . get_block_wrapper_attributes() . '>' . $svg_markup . '</div>';
+
+					// Non-SVG image.
+					} else {
+						$img_markup = wp_get_attachment_image( 
+							$attachment_id,                          // Attachment id.
 							$size = 'bigup_service_icon',            // Size.
 							$icon = true,                            // Treat image as an icon.
 							$attr = array(
 								'alt' => $field['label'] .  ' icon', // alt text.
 							),
 						);
-						if ( strlen( $icon_markup ) > 0 ) {
-							$output .= '<figure>' . $icon_markup . '</figure>';
+						if ( strlen( $img_markup ) > 0 ) {
+							$output .= '<div ' . $style . ' ' . get_block_wrapper_attributes() . '><figure>' . $img_markup . '</figure></div>';
 						}
 					}
 					break;
 			}
 		}
 		if ( strlen( $output ) > 0 ) {
-			return '<div ' . get_block_wrapper_attributes() . '>' . $output . '</div>';
+			return $output;
 		} else {
 			return '';
 		}

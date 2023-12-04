@@ -6,6 +6,7 @@ import { useEntityProp } from '@wordpress/core-data'
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor'
 import metadata from './block.json'
 import json from '../../../data/service-definition'
+import { Icon } from '../../components/Icon'
 const { prefix, key, customFields } = json
 
 /**
@@ -54,6 +55,7 @@ export default function Edit( {
 		<p>{ `Error: This block must be used inside a ${label} post type query loop!` }</p>
 	)
 
+	// Setup field object.
 	const [ meta ] = useEntityProp( 'postType', postType, 'meta', postId )
 	let field = {}
 	customFields.forEach( customField => {
@@ -66,6 +68,8 @@ export default function Edit( {
 			field.media = useSelect( ( select ) => select( "core" ).getMedia( value ) )
 		}
 	} )
+
+	const url = ( !! field.value && field.media?.source_url ) ? field.media.source_url : null
 
 	const postEditUri = 'post.php?post=' + postId + '&action=edit'
 
@@ -106,14 +110,13 @@ export default function Edit( {
 				</InspectorControls>
 			}
 
-			{ ( !! field.value ) &&
-				<figure { ...blockProps }>
-					<img
-						src={ field.media?.source_url }
-						width={ width }
-						height={ height }
-					/>
-				</figure>
+			{ url &&
+				<Icon
+					url={ url }
+					width={ width }
+					height={ height }
+				
+				/>
 			}
 		</>
 	)

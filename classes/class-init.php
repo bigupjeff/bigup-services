@@ -67,6 +67,7 @@ class Init {
 		// Enable WP custom fields even if ACF is installed.
 		add_filter( 'acf/settings/remove_wp_meta_box', '__return_false' );
 
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
 		add_action( 'enqueue_block_editor_assets', array( &$this, 'enqueue_block_editor_scripts' ) );
 		add_action( 'after_setup_theme', array( &$this, 'add_service_icon_image_size' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
@@ -85,6 +86,15 @@ class Init {
 
 
 	/**
+	 * Enqueue frontend scripts.
+	 */
+	public function enqueue_frontend_scripts() {
+		// cannot get this to play ball.
+		wp_enqueue_script( 'bigup_external_svg_loader_js', CPTSERV_URL . 'build/js/bigup-external-svg-loader.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-external-svg-loader.js' ), true );
+	}
+
+
+	/**
 	 * Enqueue media upload functionality.
 	 *
 	 * Initialise wp.media to handle the admin media upload/select modal.
@@ -99,10 +109,11 @@ class Init {
 
 
 	/**
-	 * Enqueue scripts for this plugin.
+	 * Enqueue gutenberg editor scripts.
 	 */
 	public function enqueue_block_editor_scripts() {
 		wp_enqueue_script( 'bigup_cpt_service_gutenberg_js', CPTSERV_URL . 'build/js/bigup-cpt-service-gutenberg.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-cpt-service-gutenberg.js' ), true );
+		wp_enqueue_script( 'bigup_external_svg_loader_js', CPTSERV_URL . 'build/js/bigup-external-svg-loader.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-external-svg-loader.js' ), true );
 	}
 
 

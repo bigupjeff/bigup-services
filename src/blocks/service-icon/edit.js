@@ -115,7 +115,6 @@ export default function Edit( {
 					url={ url }
 					width={ width }
 					height={ height }
-				
 				/>
 			}
 		</>

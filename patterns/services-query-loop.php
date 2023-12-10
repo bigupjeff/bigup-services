@@ -39,7 +39,7 @@ $markup = <<<END
 				<div class="wp-block-buttons">
 					<!-- wp:button {"backgroundColor":"bur-accent"} -->
 					<div class="wp-block-button">
-						<a class="wp-block-button__link has-bur-accent-background-color has-background wp-element-button">Book Appointment</a>
+						<a class="wp-block-button__link has-bur-accent-background-color has-background wp-element-button">{$strings['button']}</a>
 					</div>
 					<!-- /wp:button -->
 				</div>

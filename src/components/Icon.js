@@ -12,28 +12,22 @@ const Icon = ( { url, width, height } ) => {
 	if ( isSVG( url ) ) {
 		// Get the SVG using external-svg-loader.
 		return (
-			<span>
-				<svg
-					data-src={ url }
-					width={ width }
-					height={ height }
-					data-loading="lazy"
-
-					data-cache="disabled"
-				/>
-			</span>
+			<svg
+				data-src={ url }
+				width={ width }
+				height={ height }
+				data-loading="lazy"
+			/>
 		)
 
 	// Non-SVG image.
 	} else {
 		return(
-			<figure>
-				<img
-					src={ url }
-					width={ width }
-					height={ height }
-				/>
-			</figure>
+			<img
+				src={ url }
+				width={ width }
+				height={ height }
+			/>
 		)
 	}
 }

@@ -150,7 +150,7 @@ class Editor_Gutenberg {
 							),
 						);
 						if ( strlen( $img_markup ) > 0 ) {
-							$output .= '<div ' . $style . ' ' . get_block_wrapper_attributes() . '><figure>' . $img_markup . '</figure></div>';
+							$output .= '<div ' . $style . ' ' . get_block_wrapper_attributes() . '>' . $img_markup . '</div>';
 						}
 					}
 					break;

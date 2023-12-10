@@ -87,13 +87,13 @@ export default function Edit( {
 									<TextControl
 										label={ __( 'Width' ) }
 										value={ width }
-										onChange={ ( newWidth ) => setAttributes( { width: newWidth } ) }
+										onChange={ ( value ) => setAttributes( { width: value } ) }
 										type="number"
 									/>
 									<TextControl
 										label={ __( 'Height' ) }
 										value={ height }
-										onChange={ ( newHeight ) => setAttributes( { height: newHeight } ) }
+										onChange={ ( value ) => setAttributes( { height: value } ) }
 										type="number"
 									/>
 								</div>
@@ -111,11 +111,13 @@ export default function Edit( {
 			}
 
 			{ url &&
-				<Icon
-					url={ url }
-					width={ width }
-					height={ height }
-				/>
+				<div { ...blockProps }>
+					<Icon
+						url={ url }
+						width={ width }
+						height={ height }
+					/>
+				</div>
 			}
 		</>
 	)

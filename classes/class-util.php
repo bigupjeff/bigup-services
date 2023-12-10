@@ -4,7 +4,7 @@ namespace BigupWeb\CPT_Service;
 /**
  * Utilities.
  *
- * @package cpt-service
+ * @package bigup-cpt-service
  */
 class Util {
 

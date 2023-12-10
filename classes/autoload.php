@@ -2,7 +2,7 @@
 /**
  * SPL Class Autoloader.
  *
- * @package cpt-service
+ * @package bigup-cpt-service
  * @param string $class The fully-qualified class name.
  */
 

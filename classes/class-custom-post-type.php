@@ -4,7 +4,7 @@ namespace BigupWeb\CPT_Service;
 /**
  * Register custom post type.
  *
- * @package cpt-service
+ * @package bigup-cpt-service
  */
 class Custom_Post_Type {
 
@@ -49,7 +49,7 @@ class Custom_Post_Type {
 		$this->taxonomies = $definition['definition']['taxonomies'];
 
 		// Get menu icon svg and convert it to a data url.
-		$svg        = Util::get_contents( CPTSERV_DIR . 'assets/svg/cpt-service-menu-icon.svg' );
+		$svg        = Util::get_contents( CPTSERV_DIR . 'assets/svg/bigup-cpt-service-menu-icon.svg' );
 		$base64     = base64_encode( $svg );
 		$data_url   = 'data:image/svg+xml;base64,' . $base64;
 		$this->icon = $data_url;

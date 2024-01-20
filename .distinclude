@@ -1,16 +1,8 @@
 ./assets
 ./build
 ./classes
-./dashicons
 ./data
-./languages
-./parts
 ./patterns
-./styles
-./templates
-./bigup-cpt-service.php
+./bigup-services.php
 ./license.md
 ./readme.md
-./screenshot.png
-./style.css
-./theme.json

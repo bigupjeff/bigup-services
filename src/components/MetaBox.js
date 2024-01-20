@@ -8,8 +8,6 @@ import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor'
 import json from '../../data/service-definition'
 const { prefix, key, customFields } = json
 
-console.log( 'bigup-cpt-service-metabox PLUGIN LOADED' )
-
 /**
  * Add a metabox for all post custom fields.
  * 

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
 	"apiVersion": 2,
-	"name": "bigupweb/service-icon",
+	"name": "bigup-services/service-icon",
 	"version": "0.1.0",
 	"title": "Service Icon",
 	"category": "theme",

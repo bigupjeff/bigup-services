@@ -1,5 +1,5 @@
 <?php
-namespace BigupWeb\CPT_Service;
+namespace BigupWeb\Services;
 /**
  * Patterns Handler.
  * 
@@ -93,7 +93,7 @@ class Patterns {
 				continue;
 			}
 			register_block_pattern(
-				'bigupweb/' . $pattern,
+				'bigup-services/' . $pattern,
 				require $file
 			);
 		}

@@ -1,8 +1,8 @@
 <?php
-namespace BigupWeb\CPT_Service;
+namespace BigupWeb\Services;
 
 /**
- * Plugin Name:       Bigup Web: Custom Post Type - Service
+ * Plugin Name:       Bigup Services
  * Description:       A custom 'Services' post type with custom meta fields.
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -18,8 +18,10 @@ namespace BigupWeb\CPT_Service;
  * @link              https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/
  */
 
+$enable_debug = false;
+
 // Define constants.
-define( 'CPTSERV_DEBUG', defined( 'WP_DEBUG' ) && WP_DEBUG === true );
+define( 'CPTSERV_DEBUG', defined( 'WP_DEBUG' ) && WP_DEBUG === true && $enable_debug );
 define( 'CPTSERV_DIR', trailingslashit( __DIR__ ) );
 define( 'CPTSERV_URL', trailingslashit( get_site_url( null, strstr( __DIR__, '/wp-content/' ) ) ) );
 

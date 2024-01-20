@@ -1,5 +1,5 @@
 <?php
-namespace BigupWeb\CPT_Service;
+namespace BigupWeb\Services;
 
 /**
  * Initialise.
@@ -41,7 +41,7 @@ class Init {
 	public function setup() {
 
 		if ( ! is_array( $this->def ) || ! array_key_exists( 'key', $this->def ) ) {
-			error_log( 'BigupWeb\CPT_Service error: Could not retrieve post type definition' );
+			error_log( 'BigupWeb\Services error: Could not retrieve post type definition' );
 			return;
 		}
 
@@ -103,7 +103,7 @@ class Init {
 		if ( get_post_type() === $this->def['key'] ) {
 			// Initialise wp.media to handle the admin media upload/select modal.
 			wp_enqueue_media();
-			wp_enqueue_script( 'bigup_cpt_service_classic_js', CPTSERV_URL . 'build/js/bigup-cpt-service-classic-editor.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-cpt-service-classic-editor.js' ), true );
+			wp_enqueue_script( 'bigup_Services_classic_js', CPTSERV_URL . 'build/js/bigup-cpt-service-classic-editor.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-cpt-service-classic-editor.js' ), true );
 		}
 	}
 
@@ -112,7 +112,7 @@ class Init {
 	 * Enqueue gutenberg editor scripts.
 	 */
 	public function enqueue_block_editor_scripts() {
-		wp_enqueue_script( 'bigup_cpt_service_gutenberg_js', CPTSERV_URL . 'build/js/bigup-cpt-service-gutenberg.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-cpt-service-gutenberg.js' ), true );
+		wp_enqueue_script( 'bigup_Services_gutenberg_js', CPTSERV_URL . 'build/js/bigup-cpt-service-gutenberg.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-cpt-service-gutenberg.js' ), true );
 		wp_enqueue_script( 'bigup_external_svg_loader_js', CPTSERV_URL . 'build/js/bigup-external-svg-loader.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-external-svg-loader.js' ), true );
 	}
 

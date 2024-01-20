@@ -24,7 +24,7 @@ $markup = <<<END
 				<div class="wp-block-group" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
 					<!-- wp:group {"style":{"spacing":{"blockGap":"0","padding":{"right":"0","left":"0","top":"0","bottom":"0"}}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"center"}} -->
 					<div class="wp-block-group" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
-						<!-- wp:bigupweb/service-icon /-->
+						<!-- wp:bigup-services/service-icon /-->
 					</div>
 					<!-- /wp:group -->
 					<!-- wp:post-title {"level":3,"fontSize":"xx-large"} /-->

@@ -47,7 +47,7 @@
 	},
 	"customFields": [
 		{
-			"block_name": "bigupweb/service-price",
+			"block_name": "bigup-services/service-price",
 			"suffix": "_price",
 			"label": "Price",
 			"description": "The cost of this service",
@@ -63,7 +63,7 @@
 			"user_capabilities": "edit_posts"
 		},
 		{
-			"block_name": "bigupweb/service-icon",
+			"block_name": "bigup-services/service-icon",
 			"suffix": "_icon",
 			"label": "Icon",
 			"description": "A service icon",

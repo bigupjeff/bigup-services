@@ -1,5 +1,5 @@
 <?php
-namespace BigupWeb\CPT_Service;
+namespace BigupWeb\Services;
 
 /**
  * Utilities.

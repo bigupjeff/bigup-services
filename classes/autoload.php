@@ -9,7 +9,7 @@
 spl_autoload_register(
 	function( $class ) {
 
-		$namespace       = 'BigupWeb\\CPT_Service\\';
+		$namespace       = 'BigupWeb\\Services\\';
 		$classes_dir     = dirname( __FILE__ );
 		$filename_prefix = 'class-';
 

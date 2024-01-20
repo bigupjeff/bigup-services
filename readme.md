@@ -1,4 +1,4 @@
-# Bigup Web: Custom Post Type - Service
+# Bigup Services
 
 ## Publish and manage services!
 

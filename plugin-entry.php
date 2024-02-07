@@ -10,9 +10,9 @@ namespace BigupWeb\Services;
  * Author:            Jefferson Real
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       bigup-cpt-service
+ * Text Domain:       bigup-services
  *
- * @package           bigup-cpt-service
+ * @package           bigup-services
  * @link              https://kinsta.com/blog/dynamic-blocks/
  * @link              https://kinsta.com/blog/wordpress-add-meta-box-to-post/
  * @link              https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/creating-dynamic-blocks/

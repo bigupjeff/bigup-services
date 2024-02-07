@@ -13,9 +13,9 @@ module.exports = {
 	entry: {
 		// Spread the auto-generated entrypoints.
 		...getWebpackEntryPoints(),
-		'css/bigup-cpt-service-classic-editor': path.resolve( process.cwd(), 'src', 'css/bigup-cpt-service-classic-editor.scss' ),
-		'js/bigup-cpt-service-gutenberg': path.resolve( process.cwd(), 'src', 'js/bigup-cpt-service-gutenberg.js' ),
-		'js/bigup-cpt-service-classic-editor': path.resolve( process.cwd(), 'src', 'js/bigup-cpt-service-classic-editor.js' ),
+		'css/bigup-services-classic-editor': path.resolve( process.cwd(), 'src', 'css/bigup-services-classic-editor.scss' ),
+		'js/bbigup-services-gutenberg': path.resolve( process.cwd(), 'src', 'js/bigup-services-gutenberg.js' ),
+		'js/bigup-services-classic-editor': path.resolve( process.cwd(), 'src', 'js/bigup-services-classic-editor.js' ),
 		// Import external-svg-loader to use enqueue with PHP.
 		'js/bigup-external-svg-loader': path.resolve( process.cwd(), 'src', 'js/bigup-external-svg-loader.js' ),
 	},

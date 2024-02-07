@@ -4,7 +4,7 @@ namespace BigupWeb\Services;
 /**
  * Sanitization methods.
  *
- * @package bigup-cpt-service
+ * @package bigup-services
  */
 class Sanitize {
 

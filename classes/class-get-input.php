@@ -6,7 +6,7 @@ namespace BigupWeb\Services;
  *
  * A library of form input field templates for the classic editor.
  *
- * @package bigup-cpt-service
+ * @package bigup-services
  */
 
 class Get_Input {

@@ -4,7 +4,7 @@ namespace BigupWeb\Services;
 /**
  * Register custom meta box for the classic editor.
  *
- * @package bigup-cpt-service
+ * @package bigup-services
  */
 class Editor_Classic {
 

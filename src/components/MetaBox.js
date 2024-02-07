@@ -73,7 +73,7 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 												className={ ! field.value ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview' }
 												onClick={ open }
 											>
-												{ ! field.value && __( 'Set an icon', 'bigup-cpt-service' ) }
+												{ ! field.value && __( 'Set an icon', 'bigup-services' ) }
 												{ field.media !== undefined &&
 												<ResponsiveWrapper
 													naturalWidth={ field.media.media_details.width }
@@ -92,7 +92,7 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 								<PanelRow>
 									<MediaUploadCheck>
 										<MediaUpload
-											title={__( 'Replace image', 'bigup-cpt-service' )}
+											title={__( 'Replace image', 'bigup-services' )}
 											value={ field.value }
 											onSelect={ ( newMedia ) => field.updateValue( newMedia.id ) }
 											allowedTypes={ [ 'image' ] }
@@ -102,7 +102,7 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 													variant="secondary" 
 													isLarge
 												>
-													{ __( 'Replace icon', 'bigup-cpt-service' ) }
+													{ __( 'Replace icon', 'bigup-services' ) }
 												</Button>
 											) }
 										/>
@@ -113,7 +113,7 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 											variant="secondary" 
 											isLarge
 										>
-											{ __( 'Remove icon', 'bigup-cpt-service' ) }
+											{ __( 'Remove icon', 'bigup-services' ) }
 										</Button>
 									</MediaUploadCheck>
 								</PanelRow>

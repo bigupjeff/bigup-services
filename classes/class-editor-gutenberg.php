@@ -4,7 +4,7 @@ namespace BigupWeb\Services;
 /**
  * Register custom meta box for the Gutenberg editor.
  *
- * @package bigup-cpt-service
+ * @package bigup-services
  */
 class Editor_Gutenberg {
 

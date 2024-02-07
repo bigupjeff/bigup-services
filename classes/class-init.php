@@ -4,7 +4,7 @@ namespace BigupWeb\Services;
 /**
  * Initialise.
  *
- * @package bigup-cpt-service
+ * @package bigup-services
  */
 class Init {
 
@@ -103,7 +103,7 @@ class Init {
 		if ( get_post_type() === $this->def['key'] ) {
 			// Initialise wp.media to handle the admin media upload/select modal.
 			wp_enqueue_media();
-			wp_enqueue_script( 'bigup_Services_classic_js', CPTSERV_URL . 'build/js/bigup-cpt-service-classic-editor.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-cpt-service-classic-editor.js' ), true );
+			wp_enqueue_script( 'bigup_Services_classic_js', CPTSERV_URL . 'build/js/bigup-services-classic-editor.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-services-classic-editor.js' ), true );
 		}
 	}
 
@@ -112,7 +112,7 @@ class Init {
 	 * Enqueue gutenberg editor scripts.
 	 */
 	public function enqueue_block_editor_scripts() {
-		wp_enqueue_script( 'bigup_Services_gutenberg_js', CPTSERV_URL . 'build/js/bigup-cpt-service-gutenberg.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-cpt-service-gutenberg.js' ), true );
+		wp_enqueue_script( 'bigup_Services_gutenberg_js', CPTSERV_URL . 'build/js/bigup-services-gutenberg.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-services-gutenberg.js' ), true );
 		wp_enqueue_script( 'bigup_external_svg_loader_js', CPTSERV_URL . 'build/js/bigup-external-svg-loader.js', array(), filemtime( CPTSERV_DIR . 'build/js/bigup-external-svg-loader.js' ), true );
 	}
 
@@ -122,7 +122,7 @@ class Init {
 	 */
 	public function add_classic_editor_styles() {
 		// TinyMCE styles (asks for relative path to plugin root but full URL overrides this).
-		add_editor_style( CPTSERV_URL . 'build/css/bigup-cpt-service-classic-editor.css' );
+		add_editor_style( CPTSERV_URL . 'build/css/bigup-services-classic-editor.css' );
 	}
 
 

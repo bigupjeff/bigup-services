@@ -7,7 +7,7 @@
  */
 
 $strings = array(
-	'button' => __( 'Book Appointment', 'bigup-cpt-service' ),
+	'button' => __( 'Book Appointment', 'bigup-services' ),
 );
 
 $markup = <<<END
@@ -56,8 +56,8 @@ $markup = <<<END
 END;
 
 return array(
-	'title'       => __( 'Services Query Loop', 'bigup-cpt-service' ),
-	'description' => _x( 'Display services in a section of wrapping-rows', 'Block pattern description', 'bigup-cpt-service' ),
+	'title'       => __( 'Services Query Loop', 'bigup-services' ),
+	'description' => _x( 'Display services in a section of wrapping-rows', 'Block pattern description', 'bigup-services' ),
 	'categories'  => array( 'bigupweb-services' ),
 	'keywords'    => array( 'services', 'section' ),
 	'content'     => $markup,

@@ -15,12 +15,12 @@
 	"editorScript": "file:./index.js",
 	"attributes": {
 		"width": {
-			"type": "integer",
-			"default": 60
+			"type": "string",
+			"default": "60"
 		},
 		"height": {
-			"type": "integer",
-			"default": 60
+			"type": "string",
+			"default": "60"
 		}
 	}
 }

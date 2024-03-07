@@ -18,6 +18,10 @@ a supercharged version of WPs built-in custom field support generating custom bl
 Eventually I may explore dynamic building of the post types themselves, so users could create
 literally any content type with a single plugin and no-code.
 
+#### Next Step
+
+Find a way to sort query loops by the custom metafield '_order'.
+
 #### Version history
 
 **0.1.0**

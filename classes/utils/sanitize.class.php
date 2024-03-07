@@ -43,6 +43,12 @@ class Sanitize {
 			case 'number':
 				return array( new Sanitize(), 'number' );
 
+			case 'price':
+					return array( new Sanitize(), 'number' );
+
+			case 'order':
+				return array( new Sanitize(), 'number' );
+
 			case 'checkbox':
 				return array( new Sanitize(), 'checkbox' );
 

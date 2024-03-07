@@ -57,7 +57,7 @@ class Patterns {
 				'label' => __( 'Bigup Web: Services', 'cpt-service' )
 			),
 		);
-		$path = CPTSERV_DIR . 'patterns';
+		$path = BIGUPSERVICE_PATH . 'patterns';
 		$files = ( file_exists( $path ) ) ? scandir( $path ) : array();
 		if ( is_array( $files ) ) {
 			$filenames = preg_replace( '/\..*/', '', $files );
@@ -88,7 +88,7 @@ class Patterns {
 	 */
 	private function register_patterns() {
 		foreach ( $this->patterns as $pattern ) {
-			$file = CPTSERV_DIR . 'patterns/' . $pattern . '.php';
+			$file = BIGUPSERVICE_PATH . 'patterns/' . $pattern . '.php';
 			if ( ! is_file( $file ) ) {
 				continue;
 			}

@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import { compose } from '@wordpress/compose'
 import { withSelect, withDispatch, useSelect } from '@wordpress/data'
 import { PluginDocumentSettingPanel } from '@wordpress/edit-post'
-import { PanelRow, TextControl, Button, ResponsiveWrapper } from '@wordpress/components'
-import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor'
+import {
+	AnyNumberControl,
+	ImageControl
+} from './Controls'
 import json from '../../data/service-definition'
 const { prefix, key, customFields } = json
 
@@ -23,7 +25,7 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 		const metaKey = prefix + key + customField.suffix
 		const value = metaFields[ metaKey ] || ''
 		const inputType = customField.input_type
-		fields.push( {
+		fields[ customField.suffix ] = {
 			'metaKey': metaKey,
 			'value': value,
 			'updateValue': ( newValue ) => setMetaFields( { [ metaKey ]: newValue } ),
@@ -33,96 +35,23 @@ const MetaBox = ( { postType, metaFields, setMetaFields } ) => {
 			'placeholder': customField?.placeholder || '',
 			'required': customField?.required || '',
 			'maxlength': customField?.length_limit || '',
+			'max': customField?.max_value || '',
+			'min': customField?.min_value || '',
+			'step': customField?.value_step || '',
 			'media': ( inputType === 'image-upload' ) ? useSelect( ( select ) => select( "core" ).getMedia( value ) ) : false,
-		} )
+		}
 	} )
-
 	return(
-		<>
-			{ fields.map( ( field ) => (
-				<PluginDocumentSettingPanel
-					key={ field.metaKey }
-					name={ field.metaKey + '-panel' }
-					title={ field.label } 
-					initialOpen={ true }
-				>
-					{ field.type === 'number' &&
-						<PanelRow>
-							<TextControl
-								label={ field.description }
-								value={ field.value }
-								onChange={ field.updateValue }
-								type={ field.type }
-								placeholder={ field.placeholder }
-								required={ field.required }
-								maxLength={ field.maxlength }
-							/>
-						</PanelRow>
-					}
+		<PluginDocumentSettingPanel
+			title={ __( 'Service Settings', 'bigup-services' ) } 
+			initialOpen={ true }
+		>
 
-					{ field.type === 'image-upload' &&
-						<>
-							<PanelRow>
-								<MediaUploadCheck>
-									<MediaUpload
-										onSelect={ ( newMedia ) => field.updateValue( newMedia.id ) }
-										value={ field.value }
-										allowedTypes={ [ 'image' ] }
-										render={ ( { open } ) => (
-											<Button 
-												className={ ! field.value ? 'editor-post-featured-image__toggle' : 'editor-post-featured-image__preview' }
-												onClick={ open }
-											>
-												{ ! field.value && __( 'Set an icon', 'bigup-services' ) }
-												{ field.media !== undefined &&
-												<ResponsiveWrapper
-													naturalWidth={ field.media.media_details.width }
-													naturalHeight={ field.media.media_details.height }
-												>
-													<img src={ field.media.source_url } />
-												</ResponsiveWrapper>
-											}
-											</Button>
-										) }
-									/>
-								</MediaUploadCheck>
-							</PanelRow>
+			<AnyNumberControl data={ fields[ '_order' ] } />
+			<AnyNumberControl data={ fields[ '_price' ] } />
+			<ImageControl data={ fields[ '_icon' ] } />
 
-							{ field.value &&
-								<PanelRow>
-									<MediaUploadCheck>
-										<MediaUpload
-											title={__( 'Replace image', 'bigup-services' )}
-											value={ field.value }
-											onSelect={ ( newMedia ) => field.updateValue( newMedia.id ) }
-											allowedTypes={ [ 'image' ] }
-											render={ ( { open } ) => (
-												<Button
-													onClick={ open }
-													variant="secondary" 
-													isLarge
-												>
-													{ __( 'Replace icon', 'bigup-services' ) }
-												</Button>
-											) }
-										/>
-									</MediaUploadCheck>
-									<MediaUploadCheck>
-										<Button
-											onClick={ () => field.updateValue( 0 ) }
-											variant="secondary" 
-											isLarge
-										>
-											{ __( 'Remove icon', 'bigup-services' ) }
-										</Button>
-									</MediaUploadCheck>
-								</PanelRow>
-							}
-						</>
-					}
-				</PluginDocumentSettingPanel>
-			) ) }
-		</>
+		</PluginDocumentSettingPanel>
 	)
 }
 

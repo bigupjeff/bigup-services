@@ -6,7 +6,7 @@ namespace BigupWeb\Services;
  * Description:       A custom 'Services' post type with custom meta fields.
  * Requires at least: 6.0
  * Requires PHP:      7.4
- * Version:           0.1.2
+ * Version:           0.1.3
  * Author:            Jefferson Real
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,12 +21,14 @@ namespace BigupWeb\Services;
 $enable_debug = false;
 
 // Define constants.
-define( 'CPTSERV_DEBUG', defined( 'WP_DEBUG' ) && WP_DEBUG === true && $enable_debug );
-define( 'CPTSERV_DIR', trailingslashit( __DIR__ ) );
-define( 'CPTSERV_URL', trailingslashit( get_site_url( null, strstr( __DIR__, '/wp-content/' ) ) ) );
+define( 'BIGUPSERVICE_DEBUG', $enable_debug );
+define( 'BIGUPSERVICE_PATH', trailingslashit( __DIR__ ) );
+define( 'BIGUPSERVICE_URL', trailingslashit( get_site_url( null, strstr( __DIR__, '/wp-content/' ) ) ) );
 
-// Setup PHP namespace.
-require_once CPTSERV_DIR . 'classes/autoload.php';
+// Register namespaced autoloader.
+$namespace = 'BigupWeb\\Services\\';
+$root      = BIGUPSERVICE_PATH . 'classes/';
+require_once $root . 'autoload.php';
 
 // Setup this plugin.
 $Init = new Init();

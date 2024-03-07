@@ -6,7 +6,7 @@ namespace BigupWeb\Services;
  *
  * @package bigup-services
  */
-class Editor_Classic {
+class Metabox_Classic {
 
 	/**
 	 * Custom post type key.

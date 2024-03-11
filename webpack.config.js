@@ -18,5 +18,7 @@ module.exports = {
 		'js/bigup-services-classic-editor': path.resolve( process.cwd(), 'src', 'js/bigup-services-classic-editor.js' ),
 		// Import external-svg-loader to use enqueue with PHP.
 		'js/bigup-external-svg-loader': path.resolve( process.cwd(), 'src', 'js/bigup-external-svg-loader.js' ),
+		// Block variations.
+		'block-variations/service-query-loop/index': path.resolve( process.cwd(), 'src', 'block-variations/service-query-loop/index.js' ),
 	},
 }

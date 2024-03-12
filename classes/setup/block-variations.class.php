@@ -34,6 +34,15 @@ class Block_Variations {
 	 */
 	private string $current_name = '';
 
+	/**
+	 * Query props to implement sort by 'order' metafield.
+	 */
+	private array $custom_query = array(
+		'meta_key' => '_bigup_service_order',
+		'orderby'  => 'meta_value_num',
+		'order'    => 'ASC',
+	);
+
 
 	/**
 	 * Setup the class.
@@ -61,8 +70,8 @@ class Block_Variations {
 			// Modify frontend query.
 			add_filter( 'pre_render_block', array( $this, 'modify_query_before_frontend_block_render' ), 10, 2 );
 
-			// Modify editor query.
-			add_filter( 'rest_events_query', array( $this, 'modify_query_before_editor_block_render' ), 10, 2 );
+			// Modify editor query - Note the dynamically generated hook which includes the CPT name.
+			add_filter( 'rest_service_query', array( $this, 'modify_query_before_editor_block_render' ), 999, 2 );
 		}
 	}
 
@@ -87,27 +96,12 @@ class Block_Variations {
 	 * Modify the query before rendering the frontend block.
 	 */
 	function modify_query_before_frontend_block_render( $pre_render, $parsed_block ) {
-
-		// Verify it's the block that should be modified using the namespace.
+		// Identify the block that should be modified by matching the namespace.
 		if ( !empty( $parsed_block['attrs']['namespace'] ) && $this->current_name === $parsed_block['attrs']['namespace'] ) {
 			add_filter(
 				'query_loop_block_query_vars',
 				function( $query, $block ) {
-
-
-error_log( 'query_loop_block_query_vars before: ' . serialize( $query ) );
-
-
-
-					// Modify the frontend query props here.
-					$query['meta_key'] = '_bigup_service_order';
-					$query['orderby']  = 'meta_value_num';
-					$query['order']    = 'ASC'; // ASC || DESC.
-
-
-error_log( 'query_loop_block_query_vars after: ' . serialize( $query ) );
-
-
+					$query = $this->merge_custom_query_args( $query );
 					return $query;
 				},
 				10,
@@ -122,22 +116,20 @@ error_log( 'query_loop_block_query_vars after: ' . serialize( $query ) );
 	 * Modify the query before rendering the block in the editor.
 	 */
 	function modify_query_before_editor_block_render( $args, $request ) {
-
-
-error_log( 'rest_events_query before: ' . serialize( $args ) );
-
-		$sortByOrder = $request['sortByOrder'];
-		if ( $sortByOrder ) {
-		
-			// Modify the editor query props here.
-			$args['meta_key'] = '_bigup_service_order';
-			$args['orderby']  = 'meta_value_num';
-			$args['order']    = 'ASC'; // ASC || DESC.
+		if ( $request['sortByOrder'] ) {
+			$args = $this->merge_custom_query_args( $args );
 		}
-
-
-error_log( 'rest_events_query after: ' . serialize( $args ) );
-
 		return $args;
+	}
+
+
+	/**
+	 * Merge the custom query with the default query args.
+	 */
+	function merge_custom_query_args( $default_query ) {
+		return array(
+			...$default_query,
+			...$this->custom_query
+		);
 	}
 }

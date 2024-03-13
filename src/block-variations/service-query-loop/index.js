@@ -42,9 +42,8 @@ registerBlockVariation( 'core/query', {
 		},
 	},
 	isActive: [ 'namespace' ],
-	scope: [ 'inserter' ],
+	scope: [ 'inserter', 'transform' ],
 	allowedControls: [
-		'postType',
 		'inherit',
 		'order',
 		'taxQuery',
@@ -53,11 +52,11 @@ registerBlockVariation( 'core/query', {
 	],
 	innerBlocks: [
 		[
-		'core/post-template',
-		{},
-		[
-			[ 'core/post-title' ]
-		],
+			'core/post-template',
+			{},
+			[
+				[ 'core/post-title' ]
+			],
 		]
 	]
 } )

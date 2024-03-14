@@ -81,7 +81,7 @@ class Block_Variations {
 	 * 
 	 * Must be called before `admin_enqueue_scripts` hook.
 	 */
-	function register_block_variation_script() {
+	public function register_block_variation_script() {
 		wp_enqueue_script(
 			'bigup_' . preg_replace( '/-/', '_', $this->current_name ) . '_js',
 			self::URL . $this->current_name . '/index.js',
@@ -95,13 +95,26 @@ class Block_Variations {
 	/**
 	 * Modify the query before rendering the frontend block.
 	 */
-	function modify_query_before_frontend_block_render( $pre_render, $parsed_block ) {
+	public function modify_query_before_frontend_block_render( $pre_render, $parsed_block ) {
 		// Identify the block that should be modified by matching the namespace.
+
+		// TO FIX: This test is pointless as the 'query_loop_block_query_vars' seems to affect other queries anyway.
 		if ( !empty( $parsed_block['attrs']['namespace'] ) && $this->current_name === $parsed_block['attrs']['namespace'] ) {
+
 			add_filter(
 				'query_loop_block_query_vars',
 				function( $query, $block ) {
-					$query = $this->merge_custom_query_args( $query );
+
+					// TEMP FIX: This is a hack to prevent non-service post queries being modified.
+					// The problem is that hard-coding 'service' breaks the dynamic nature of this
+					// code and also means service queries not being sorted by order will be broken. 
+					if ( !empty( $query['post_type'] ) && $query['post_type'] === 'service' ) {
+						$query = $this->merge_custom_query_args( $query );
+					}
+
+					// DEBUG
+					error_log( serialize( $query ) );
+
 					return $query;
 				},
 				10,
@@ -115,7 +128,7 @@ class Block_Variations {
 	/**
 	 * Modify the query before rendering the block in the editor.
 	 */
-	function modify_query_before_editor_block_render( $args, $request ) {
+	public function modify_query_before_editor_block_render( $args, $request ) {
 		if ( $request['sortByOrder'] ) {
 			$args = $this->merge_custom_query_args( $args );
 		}
@@ -126,7 +139,7 @@ class Block_Variations {
 	/**
 	 * Merge the custom query with the default query args.
 	 */
-	function merge_custom_query_args( $default_query ) {
+	private function merge_custom_query_args( $default_query ) {
 		return array(
 			...$default_query,
 			...$this->custom_query

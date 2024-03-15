@@ -24,7 +24,7 @@ class Block_Variations {
 
 	/**
 	 * Block directory names.
-	 * 
+	 *
 	 * @var array
 	 */
 	private array $names = array();
@@ -71,14 +71,14 @@ class Block_Variations {
 			add_filter( 'pre_render_block', array( $this, 'modify_query_before_frontend_block_render' ), 10, 2 );
 
 			// Modify editor query - Note the dynamically generated hook which includes the CPT name.
-			add_filter( 'rest_service_query', array( $this, 'modify_query_before_editor_block_render' ), 999, 2 );
+			add_filter( 'rest_service_query', array( $this, 'modify_query_before_editor_block_render' ), 10, 2 );
 		}
 	}
 
 
 	/**
 	 * Register a block variation script.
-	 * 
+	 *
 	 * Must be called before `admin_enqueue_scripts` hook.
 	 */
 	public function register_block_variation_script() {
@@ -98,27 +98,39 @@ class Block_Variations {
 	public function modify_query_before_frontend_block_render( $pre_render, $parsed_block ) {
 		// Identify the block that should be modified by matching the namespace.
 
+		$is_service_query_loop = ( ! empty( $parsed_block['attrs']['namespace'] ) && $this->current_name === $parsed_block['attrs']['namespace'] );
+
 		// TO FIX: This test is pointless as the 'query_loop_block_query_vars' seems to affect other queries anyway.
-		if ( !empty( $parsed_block['attrs']['namespace'] ) && $this->current_name === $parsed_block['attrs']['namespace'] ) {
+		if ( $is_service_query_loop ) {
+
+			// DEBUG.
+			//error_log( '###########################' );
+			//error_log( serialize( $parsed_block['attrs'] ) );
+			//error_log( 'PRE POST TYPE: ' . $parsed_block['attrs']['postType'] );
+			//error_log( 'PRE_RENDER' );
 
 			add_filter(
 				'query_loop_block_query_vars',
-				function( $query, $block ) {
+				function( $query, $block, $page ) use ( $is_service_query_loop ) {
+
+					// DEBUG.
+					//error_log( 'POST TYPE: ' . $query['post_type'] );
+					//error_log( 'is_service_query_loop: ' . $is_service_query_loop );
+					// error_log( serialize( $query ) );
+					//error_log( '###########################' );
+					//error_log( serialize( $query ) );
 
 					// TEMP FIX: This is a hack to prevent non-service post queries being modified.
 					// The problem is that hard-coding 'service' breaks the dynamic nature of this
-					// code and also means service queries not being sorted by order will be broken. 
-					if ( !empty( $query['post_type'] ) && $query['post_type'] === 'service' ) {
+					// code and also means service queries not being sorted by order will be broken.
+					if ( ! empty( $query['post_type'] ) && $query['post_type'] === 'service' ) {
 						$query = $this->merge_custom_query_args( $query );
 					}
-
-					// DEBUG
-					error_log( serialize( $query ) );
 
 					return $query;
 				},
 				10,
-				2
+				3
 			);
 		}
 		return $pre_render;
@@ -129,7 +141,7 @@ class Block_Variations {
 	 * Modify the query before rendering the block in the editor.
 	 */
 	public function modify_query_before_editor_block_render( $args, $request ) {
-		if ( $request['sortByOrder'] ) {
+		if ( isset( $request['sortByOrder'] ) && true === $request['sortByOrder'] ) {
 			$args = $this->merge_custom_query_args( $args );
 		}
 		return $args;
@@ -142,7 +154,7 @@ class Block_Variations {
 	private function merge_custom_query_args( $default_query ) {
 		return array(
 			...$default_query,
-			...$this->custom_query
+			...$this->custom_query,
 		);
 	}
 }

@@ -70,6 +70,9 @@ class Block_Variations {
 			// Modify frontend query.
 			add_filter( 'pre_render_block', array( $this, 'modify_query_before_frontend_block_render' ), 10, 2 );
 
+			// DEBUG.
+			error_log( '###########################' );
+
 			// Modify editor query - Note the dynamically generated hook which includes the CPT name.
 			add_filter( 'rest_service_query', array( $this, 'modify_query_before_editor_block_render' ), 10, 2 );
 		}
@@ -96,33 +99,35 @@ class Block_Variations {
 	 * Modify the query before rendering the frontend block.
 	 */
 	public function modify_query_before_frontend_block_render( $pre_render, $parsed_block ) {
+
 		// Identify the block that should be modified by matching the namespace.
+		if ( isset( $parsed_block['attrs']['namespace'] ) && $this->current_name === $parsed_block['attrs']['namespace'] ) {
 
-		$is_service_query_loop = ( ! empty( $parsed_block['attrs']['namespace'] ) && $this->current_name === $parsed_block['attrs']['namespace'] );
-
-		// TO FIX: This test is pointless as the 'query_loop_block_query_vars' seems to affect other queries anyway.
-		if ( $is_service_query_loop ) {
-
-			// DEBUG.
-			//error_log( '###########################' );
-			//error_log( serialize( $parsed_block['attrs'] ) );
-			//error_log( 'PRE POST TYPE: ' . $parsed_block['attrs']['postType'] );
-			//error_log( 'PRE_RENDER' );
+			/**
+			 * WARNING: Although we checked the namespace above, once applied, the
+			 * 'query_loop_block_query_vars' filter will be applied to all subsequent queries
+			 * on the same page. Therefore additional checks must be applied inside the filter
+			 * function to ensure we only modify queries for this block variation.
+			 */
 
 			add_filter(
 				'query_loop_block_query_vars',
-				function( $query, $block, $page ) use ( $is_service_query_loop ) {
+				function( $query, $block ) {
 
-					// DEBUG.
-					//error_log( 'POST TYPE: ' . $query['post_type'] );
-					//error_log( 'is_service_query_loop: ' . $is_service_query_loop );
-					// error_log( serialize( $query ) );
-					//error_log( '###########################' );
-					//error_log( serialize( $query ) );
+					// Retrieve the query from the passed block context.
+					$block_query = $block->context['query'];
 
-					// TEMP FIX: This is a hack to prevent non-service post queries being modified.
-					// The problem is that hard-coding 'service' breaks the dynamic nature of this
-					// code and also means service queries not being sorted by order will be broken.
+					// This allows us to check for query params set in registerBlockVariation().
+					if ( isset( $block->context['query']['orderByMetafield'] ) && $block->context['query']['orderByMetafield'] ) {
+
+						// orderByMetafield === true
+
+						error_log( '### block_query' );
+						error_log( serialize( $block_query ) );
+					}
+
+
+					// Modify queries for the 'service' post type.
 					if ( ! empty( $query['post_type'] ) && $query['post_type'] === 'service' ) {
 						$query = $this->merge_custom_query_args( $query );
 					}
@@ -141,7 +146,7 @@ class Block_Variations {
 	 * Modify the query before rendering the block in the editor.
 	 */
 	public function modify_query_before_editor_block_render( $args, $request ) {
-		if ( isset( $request['sortByOrder'] ) && true === $request['sortByOrder'] ) {
+		if ( isset( $request['orderByMetafield'] ) && true === $request['orderByMetafield'] ) {
 			$args = $this->merge_custom_query_args( $args );
 		}
 		return $args;

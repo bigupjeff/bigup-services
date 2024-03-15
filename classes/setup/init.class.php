@@ -57,7 +57,7 @@ class Init {
 		add_action( 'init', array( &$Blocks, 'register_all' ), 10, 0 );
 
 		$Block_Variations = new Block_Variations();
-		add_action( 'init', array( &$Block_Variations, 'register_all' ), 10, 0 );
+		add_action( 'init', array( &$Block_Variations, 'register_all' ), 11, 0 );
 
 		if ( ! array_key_exists( 'customFields', $this->def ) ) {
 			return;

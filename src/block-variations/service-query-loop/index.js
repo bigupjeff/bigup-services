@@ -1,3 +1,12 @@
+/**
+ * A Query Loop Variation for 'service' posts.
+ * 
+ * It will hide some controls such as post type selection, and implement new controls that allow for
+ * sorting by metafields.
+ * 
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/extending-the-query-loop-block
+ */
+
 import { __ } from '@wordpress/i18n'
 import { registerBlockCollection, registerBlockVariation } from '@wordpress/blocks'
 import {
@@ -7,9 +16,8 @@ import {
 
 /**
  * Register the collection.
- * 
- * COLLECTIONS ARE NOT CATEGORIES!
- * @link https://make.wordpress.org/core/2020/02/27/block-collections/
+ *
+ * @see https://make.wordpress.org/core/2020/02/27/block-collections/
  */
 registerBlockCollection(
 	'bigupweb',
@@ -21,35 +29,24 @@ registerBlockCollection(
 
 const VARIATION_NAME = 'service-query-loop'
 
-/**
- * Service Query Loop Variation.
- * 
- * This query loop block variation extends the core block by adding the ability to sort by custom
- * metafields of the custom post type.
- */
 registerBlockVariation( 'core/query', {
 	name: VARIATION_NAME,
 	title: __( 'Service Query Loop', 'bigup-services' ),
-	description: __( 'Displays a list of services', 'bigup-services' ),
+	description: __( 'Display a list of services', 'bigup-services' ),
 	icon: Icon,
 	attributes: {
 		namespace: VARIATION_NAME,
-		// You can override default query props here (see source for available props).
+		// You can set query props here.
 		query: {
 			postType: 'service',
 			order: 'asc',
-			sortByOrder: true
+			perPage: 12,
+			orderByMetafield: true
 		},
 	},
 	isActive: [ 'namespace' ],
-	scope: [ 'inserter', 'transform' ],
-	allowedControls: [
-		'inherit',
-		'order',
-		'taxQuery',
-		'author',
-		'search'
-	],
+	scope: [ 'inserter', 'transform' ], // 'transform' allows core query loop to be transformed to service query.
+	allowedControls: [ 'order', 'taxQuery', 'search' ],
 	innerBlocks: [
 		[
 			'core/post-template',
@@ -60,3 +57,33 @@ registerBlockVariation( 'core/query', {
 		]
 	]
 } )
+
+
+/*
+ * Add custom controls.
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/extending-the-query-loop-block/#adding-additional-controls
+ * 
+ * Good plugin example:
+ * 
+ * @see https://github.com/ryanwelcher/advanced-query-loop
+ */
+
+import { InspectorControls } from '@wordpress/block-editor'
+
+export const withServiceQueryControls = ( BlockEdit ) => ( props ) => {
+
+	const isServicesVariation = ( props ) => props.namespace === VARIATION_NAME
+	
+    return isServicesVariation( props ) ? (
+        <>
+            <BlockEdit key="edit" { ...props } />
+            <InspectorControls>
+				<p>{ 'TEST CONTROLS' }</p>
+            </InspectorControls>
+        </>
+    ) : (
+        <BlockEdit key="edit" { ...props } />
+    )
+}
+
+addFilter( 'editor.BlockEdit', 'core/query', withServiceQueryControls )

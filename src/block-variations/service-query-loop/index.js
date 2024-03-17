@@ -1,18 +1,13 @@
-/**
- * A Query Loop Variation for 'service' posts.
- * 
- * It will hide some controls such as post type selection, and implement new controls that allow for
- * sorting by metafields.
- * 
- * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/extending-the-query-loop-block
- */
-
 import { __ } from '@wordpress/i18n'
 import { registerBlockCollection, registerBlockVariation } from '@wordpress/blocks'
 import {
 	Logo,
 	Icon
 } from './svg'
+import { addFilter } from '@wordpress/hooks'
+import { serviceQueryControls } from '@wordpress/block-editor'
+import metadata from './block-variation.json'
+
 
 /**
  * Register the collection.
@@ -27,21 +22,31 @@ registerBlockCollection(
 	}
 )
 
-const VARIATION_NAME = 'service-query-loop'
 
+/**
+ * Register the block variation.
+ * 
+ * Provides a Query Loop block variation for 'service' posts.
+ * 
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/extending-the-query-loop-block
+ */
 registerBlockVariation( 'core/query', {
-	name: VARIATION_NAME,
+	name: metadata.name,
 	title: __( 'Service Query Loop', 'bigup-services' ),
 	description: __( 'Display a list of services', 'bigup-services' ),
 	icon: Icon,
 	attributes: {
-		namespace: VARIATION_NAME,
+		orderByMetafield: {
+			type: 'bool',
+			default: true
+		},
+		namespace: metadata.name,
 		// You can set query props here.
 		query: {
 			postType: 'service',
 			order: 'asc',
 			perPage: 12,
-			orderByMetafield: true
+			orderByMetafield: true // Remove? - Currently used to identify query before modification.
 		},
 	},
 	isActive: [ 'namespace' ],
@@ -59,31 +64,7 @@ registerBlockVariation( 'core/query', {
 } )
 
 
-/*
- * Add custom controls.
- * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/extending-the-query-loop-block/#adding-additional-controls
- * 
- * Good plugin example:
- * 
- * @see https://github.com/ryanwelcher/advanced-query-loop
+/**
+ * Hook into the block editor to add custom controls.
  */
-
-import { InspectorControls } from '@wordpress/block-editor'
-
-export const withServiceQueryControls = ( BlockEdit ) => ( props ) => {
-
-	const isServicesVariation = ( props ) => props.namespace === VARIATION_NAME
-	
-    return isServicesVariation( props ) ? (
-        <>
-            <BlockEdit key="edit" { ...props } />
-            <InspectorControls>
-				<p>{ 'TEST CONTROLS' }</p>
-            </InspectorControls>
-        </>
-    ) : (
-        <BlockEdit key="edit" { ...props } />
-    )
-}
-
-addFilter( 'editor.BlockEdit', 'core/query', withServiceQueryControls )
+addFilter( 'editor.BlockEdit', 'core/query', serviceQueryControls )

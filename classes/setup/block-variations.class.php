@@ -37,7 +37,7 @@ class Block_Variations {
 	/**
 	 * Query props to implement sort by 'order' metafield.
 	 */
-	private array $custom_query = array(
+	private array $service_order_props = array(
 		'meta_key' => '_bigup_service_order',
 		'orderby'  => 'meta_value_num',
 		'order'    => 'ASC',
@@ -70,10 +70,7 @@ class Block_Variations {
 			// Modify frontend query.
 			add_filter( 'pre_render_block', array( $this, 'modify_query_before_frontend_block_render' ), 10, 2 );
 
-			// DEBUG.
-			error_log( '###########################' );
-
-			// Modify editor query - Note the dynamically generated hook which includes the CPT name.
+			// Modify editor query - Note the WP generated hook which includes the CPT name.
 			add_filter( 'rest_service_query', array( $this, 'modify_query_before_editor_block_render' ), 10, 2 );
 		}
 	}
@@ -109,29 +106,21 @@ class Block_Variations {
 			 * on the same page. Therefore additional checks must be applied inside the filter
 			 * function to ensure we only modify queries for this block variation.
 			 */
-
 			add_filter(
 				'query_loop_block_query_vars',
 				function( $query, $block ) {
 
-					// Retrieve the query from the passed block context.
+					// Retrieve the query attribute from the passed block markup.
 					$block_query = $block->context['query'];
 
-					// This allows us to check for query params set in registerBlockVariation().
-					if ( isset( $block->context['query']['orderByMetafield'] ) && $block->context['query']['orderByMetafield'] ) {
-
-						// orderByMetafield === true
-
-						error_log( '### block_query' );
-						error_log( serialize( $block_query ) );
-					}
-
-
-					// Modify queries for the 'service' post type.
+					// Modify 'service' post queries.
 					if ( ! empty( $query['post_type'] ) && $query['post_type'] === 'service' ) {
-						$query = $this->merge_custom_query_args( $query );
-					}
 
+						// Metafield ordering.
+						if ( isset( $block->context['query']['orderByMetafield'] ) && 'true' === $block->context['query']['orderByMetafield'] ) {
+							$query = $this->merge_service_order_props( $query );
+						}
+					}
 					return $query;
 				},
 				10,
@@ -146,8 +135,10 @@ class Block_Variations {
 	 * Modify the query before rendering the block in the editor.
 	 */
 	public function modify_query_before_editor_block_render( $args, $request ) {
-		if ( isset( $request['orderByMetafield'] ) && true === $request['orderByMetafield'] ) {
-			$args = $this->merge_custom_query_args( $args );
+
+		// Metafield ordering.
+		if ( isset( $request['orderByMetafield'] ) && 'true' === $request['orderByMetafield'] ) {
+			$args = $this->merge_service_order_props( $args );
 		}
 		return $args;
 	}
@@ -156,10 +147,10 @@ class Block_Variations {
 	/**
 	 * Merge the custom query with the default query args.
 	 */
-	private function merge_custom_query_args( $default_query ) {
+	private function merge_service_order_props( $default_query ) {
 		return array(
 			...$default_query,
-			...$this->custom_query,
+			...$this->service_order_props,
 		);
 	}
 }

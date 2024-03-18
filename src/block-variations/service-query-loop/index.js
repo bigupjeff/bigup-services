@@ -5,7 +5,7 @@ import {
 	Icon
 } from './svg'
 import { addFilter } from '@wordpress/hooks'
-import { withServiceQueryControls } from '@wordpress/block-editor'
+import { withServiceQueryControls } from './Controls'
 import metadata from './block-variation.json'
 
 
@@ -42,7 +42,7 @@ registerBlockVariation( 'core/query', {
 			postType: 'service',
 			order: 'asc',
 			perPage: 12,
-			orderByMetafield: true
+			orderByMetafield: 'true'
 		},
 	},
 	isActive: [ 'namespace' ],

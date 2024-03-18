@@ -1,6 +1,6 @@
 {
 	"name": "bigup-services",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "A custom 'Services' post type with custom meta fields.",
 	"scripts": {
 		"build": "webpack --mode production",

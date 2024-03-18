@@ -1,15 +1,22 @@
 import { InspectorControls } from '@wordpress/block-editor'
-import { CheckboxControl } from '@wordpress/components'
+import { ToggleControl } from '@wordpress/components'
 import metadata from './block-variation.json'
 
 
 const sortByOrderCheckbox = ( { attributes, setAttributes } ) => {
+	const { query: { orderByMetafield } = {} } = attributes
 	return (
-		<CheckboxControl
-			label={ __( 'Manual order', 'advanced-query-loop' ) }
-			help={ __( 'Sort services by the configured order values', 'advanced-query-loop' ) }
-			value={ attributes.orderByMetafield }
-			onChange={ ( value ) => setAttributes( { orderByMetafield: value } ) }
+		<ToggleControl
+			label={ __( 'Manual sort order', 'advanced-query-loop' ) }
+			checked={ orderByMetafield }
+			onChange={ () => {
+				setAttributes( {
+					query: {
+						...attributes.query,
+						orderByMetafield: orderByMetafield || false,
+					},
+				} )
+			} }
 		/>
 	)
 }
@@ -20,20 +27,23 @@ const sortByOrderCheckbox = ( { attributes, setAttributes } ) => {
  *
  * @see https://developer.wordpress.org/block-editor/how-to-guides/block-tutorial/extending-the-query-loop-block/#adding-additional-controls
  */
-const serviceQueryControls = ( BlockEdit ) => ( props ) => {
-	// If the is the correct variation, add the custom controls.
-	if ( props.namespace === metadata.name ) {
-		return (
-			<>
-				<BlockEdit { ...props } />
+const withServiceQueryControls = ( BlockEdit ) => ( props ) => {
+	return (
+		<>
+			<BlockEdit { ...props } />
+
+			// If this is the correct variation, add the controls.
+
+			<p>{ 'TEST CONTROLS' }</p>
+
+			{ props.namespace === metadata.name &&
 				<InspectorControls>
 					<p>{ 'TEST CONTROLS' }</p>
 					<sortByOrderCheckbox />
 				</InspectorControls>
-			</>
-		)
-	}
-	return <BlockEdit { ...props } />
+			}
+		</>
+	)
 }
 
-export { serviceQueryControls }
+export { withServiceQueryControls }

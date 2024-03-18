@@ -5,7 +5,7 @@ import {
 	Icon
 } from './svg'
 import { addFilter } from '@wordpress/hooks'
-import { serviceQueryControls } from '@wordpress/block-editor'
+import { withServiceQueryControls } from '@wordpress/block-editor'
 import metadata from './block-variation.json'
 
 
@@ -36,17 +36,13 @@ registerBlockVariation( 'core/query', {
 	description: __( 'Display a list of services', 'bigup-services' ),
 	icon: Icon,
 	attributes: {
-		orderByMetafield: {
-			type: 'bool',
-			default: true
-		},
 		namespace: metadata.name,
 		// You can set query props here.
 		query: {
 			postType: 'service',
 			order: 'asc',
 			perPage: 12,
-			orderByMetafield: true // Remove? - Currently used to identify query before modification.
+			orderByMetafield: true
 		},
 	},
 	isActive: [ 'namespace' ],
@@ -67,4 +63,4 @@ registerBlockVariation( 'core/query', {
 /**
  * Hook into the block editor to add custom controls.
  */
-addFilter( 'editor.BlockEdit', 'core/query', serviceQueryControls )
+addFilter( 'editor.BlockEdit', 'core/query', withServiceQueryControls )
